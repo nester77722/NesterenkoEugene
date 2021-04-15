@@ -40,26 +40,26 @@ namespace MyProject
 
             var firstArrayToString = string.Empty;
 
-            for (int i = 0; i < firstArray.Length; i++)
+            foreach (var integer in firstArray)
             {
-                if (firstArray[i] == 0)
+                if (integer == 0)
                 {
                     continue;
                 }
 
-                firstArrayToString += alphabet[firstArray[i] - 1];
+                firstArrayToString += alphabet[integer - 1];
             }
 
             var secondArrayToString = string.Empty;
 
-            for (int i = 0; i < secondArray.Length; i++)
+            foreach (var integer in secondArray)
             {
-                if (secondArray[i] == 0)
+                if (integer == 0)
                 {
                     continue;
                 }
 
-                secondArrayToString += alphabet[secondArray[i] - 1];
+                secondArrayToString += alphabet[integer - 1];
             }
 
             string output;
