@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Project
@@ -21,8 +22,10 @@ namespace Project
 
         public void Run()
         {
-            for (int i = 0; i < 10000000; i++)
+            for (int i = 0; i < 100; i++)
             {
+                Thread.Sleep(100);
+
                 int random = new Random().Next(1, 4);
 
                 switch (random)
@@ -41,7 +44,7 @@ namespace Project
 
                     case 3:
                         {
-                            _logger.AddLog(_actions.ErrorResult());
+                            _logger.AddLog(LogType.Error, _actions.ErrorResult().Message);
                             break;
                         }
                 }

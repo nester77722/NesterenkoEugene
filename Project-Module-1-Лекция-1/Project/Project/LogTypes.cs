@@ -8,8 +8,8 @@ namespace Project
 {
     public enum LogType
     {
-        Error,
         Info,
-        Warning
+        Warning,
+        Error
     }
 }
