@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -44,13 +45,15 @@ namespace Project
 
                     case 3:
                         {
-                            _logger.AddLog(LogType.Error, _actions.ErrorResult().Message);
+                            _logger.AddLog(LogTypes.Error, false, _actions.ErrorResult().Message);
                             break;
                         }
                 }
             }
 
             Console.WriteLine(_logger.GetLogs());
+
+            File.WriteAllText("log.txt", _logger.GetLogs());
         }
     }
 }

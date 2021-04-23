@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Project
 {
-    public enum LogType
+    public enum LogTypes
     {
         Info,
         Warning,

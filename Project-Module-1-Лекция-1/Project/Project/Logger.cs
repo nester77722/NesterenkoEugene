@@ -31,17 +31,17 @@ namespace Project
             }
         }
 
-        public void AddLog(LogType logType, string message)
+        public void AddLog(LogTypes logType, bool status, string message)
         {
             _dateTime = DateTime.Now;
 
-            if (!string.IsNullOrWhiteSpace(message))
+            if (status)
             {
-                _output.Append($"{_dateTime.ToLongTimeString()}: {logType}: Action failed by a reason: {message}\n");
+                _output.Append($"{_dateTime.ToLongTimeString()}: {logType}\n");
             }
             else
             {
-                _output.Append($"{_dateTime.ToLongTimeString()}: {logType}\n");
+                _output.Append($"{_dateTime.ToLongTimeString()}: {logType}: Action failed by a reason: {message}\n");
             }
         }
 

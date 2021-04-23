@@ -19,7 +19,7 @@ namespace Project
         {
             var result = new Result(true, string.Empty);
 
-            _logger.AddLog(LogType.Info, result.Message);
+            _logger.AddLog(LogTypes.Info, result.Status, result.Message);
 
             return result;
         }
@@ -28,16 +28,16 @@ namespace Project
         {
             var result = new Result(true, string.Empty);
 
-            _logger.AddLog(LogType.Warning, result.Message);
+            _logger.AddLog(LogTypes.Warning, result.Status, result.Message);
 
             return result;
         }
 
         public Result ErrorResult()
         {
-            var result = new Result(true, "I broke a logic");
+            var result = new Result(false, "I broke a logic");
 
-            _logger.AddLog(LogType.Error, result.Message);
+            _logger.AddLog(LogTypes.Error, result.Status, result.Message);
 
             return result;
         }
