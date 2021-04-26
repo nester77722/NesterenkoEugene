@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Project
+﻿namespace Project
 {
     public class Spice : Product
     {
@@ -12,7 +6,6 @@ namespace Project
             : base(name, energy, proteinsCount, fatsCount, carbohydratesCount, false)
         {
             IsSalty = isSalty;
-
             IsSpicy = isSpicy;
         }
 
@@ -20,4 +13,6 @@ namespace Project
 
         public bool IsSpicy { get; private set; }
     }
+
+    public record SpiceRecord(bool isSalty, bool isSpicy);
 }
