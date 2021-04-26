@@ -1,40 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Project
+﻿namespace Project
 {
-    public class Product
+    public abstract class Product
     {
-        public Product(string name, double energy, double proteinsCount, double fatsCount, double carbohydratesCount)
+        public Product(string name, double energy, double proteinsCount, double fatsCount, double carbohydratesCount, bool isJuiceable = false)
         {
             Name = name;
-
             Energy = energy;
-
             ProteinsCount = proteinsCount;
-
             FatsCount = fatsCount;
-
             CarbohydratesCount = carbohydratesCount;
-
-            IsJuiceable = false;
-        }
-
-        public Product(string name, double energy, double proteinsCount, double fatsCount, double carbohydratesCount, bool isJuiceable)
-        {
-            Name = name;
-
-            Energy = energy;
-
-            ProteinsCount = proteinsCount;
-
-            FatsCount = fatsCount;
-
-            CarbohydratesCount = carbohydratesCount;
-
             IsJuiceable = isJuiceable;
         }
 
@@ -48,7 +22,6 @@ namespace Project
 
         public double CarbohydratesCount { get; private set; }
 
-        // Можно ли делать сок из продукта
         public bool IsJuiceable { get; private set; }
     }
 }
