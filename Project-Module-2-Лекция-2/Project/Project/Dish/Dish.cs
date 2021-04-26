@@ -19,16 +19,19 @@ namespace Project.Dish
 
         public string Name { get; private set; }
 
-        public double Energy()
+        public double Energy
         {
-            double count = 0;
-
-            foreach (var product in _products)
+            get
             {
-                count += product.Energy;
-            }
+                double count = 0;
 
-            return count;
+                foreach (var product in _products)
+                {
+                    count += product.Energy;
+                }
+
+                return count;
+            }
         }
     }
 }
