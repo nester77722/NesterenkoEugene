@@ -3,8 +3,13 @@ using Project.Dishes;
 
 namespace Project.Humans
 {
-    public class Waiter : IWaiter
+    public class Waiter : Human, IWaiter
     {
+        public Waiter(string name)
+             : base(name)
+        {
+        }
+
         public Product[] GetProductsFromDishSortedByCarbohydrates(Dish dish)
         {
             var products = dish.GetProducts();
