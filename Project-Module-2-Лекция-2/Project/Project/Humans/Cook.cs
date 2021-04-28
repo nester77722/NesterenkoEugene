@@ -17,7 +17,7 @@ namespace Project.Humans
 
         public void DecorateDish()
         {
-            Console.WriteLine($"Cook {Name} decorated dish.");
+            Console.WriteLine($"Повар {Name} украсил блюдо.");
         }
     }
 }
