@@ -15,7 +15,7 @@ namespace Project
                 new Meat("Куриная грудка", 20, 10, 5, 100, Animals.Chicken),
                 new Vegetable("Огурец", 20, 10, 5, 80, 800),
                 new Vegetable("Перец болгарский", 20, 10, 5, 50, 800),
-                new Fruit("Авокадо", 20, 10, 5, 25, 800),
+                new Fruit("Авокадо", 20, 10, 5, 120, 800),
                 new Spice("Соль", 0, 0, 0, 0, true, false),
                 new Spice("Перец молотый", 0.5, 0.2, 0, 0.3, false, true)
             };
@@ -29,6 +29,8 @@ namespace Project
             waiter.ServeDish(dish);
 
             var sortedProducts = waiter.GetProductsFromDishSortedByCarbohydrates(dish);
+
+            Console.WriteLine("\nПродукты отсортированные по количеству углеводов:\n");
 
             foreach (var product in sortedProducts)
             {
