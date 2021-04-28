@@ -26,6 +26,8 @@ namespace Project
 
             Waiter waiter = new Waiter("Павел");
 
+            waiter.ServeDish(dish);
+
             var sortedProducts = waiter.GetProductsFromDishSortedByCarbohydrates(dish);
 
             foreach (var product in sortedProducts)
