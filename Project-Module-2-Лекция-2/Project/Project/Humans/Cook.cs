@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Project.Dishes;
 
-namespace Project.Cook
+namespace Project.Humans
 {
     public class Cook : Human, ICook
     {
@@ -13,9 +10,9 @@ namespace Project.Cook
         {
         }
 
-        public Dish.Dish CookDish(string name, Product[] products)
+        public Dish CookDish(string name, Product[] products)
         {
-            return new Dish.Dish(name, products);
+            return new Dish(name, products);
         }
 
         public void DecorateDish()
