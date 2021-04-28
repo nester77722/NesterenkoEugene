@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq;
+using Project.Humans;
 
 namespace Project
 {
@@ -7,23 +7,31 @@ namespace Project
     {
         public static void Main(string[] args)
         {
-            Cook.Cook cook = new Cook.Cook("Ivan");
+            Cook cook = new Cook("Богдан");
 
             Product[] products =
             {
-                new Vegetable("Tomato", 20, 10, 5, 25, 800),
-                new Meat("Куриная грудка", 20, 10, 5, 25, Animals.Chicken),
-                new Vegetable("Сucumber", 20, 10, 5, 25, 800),
-                new Vegetable("Pepper", 20, 10, 5, 25, 800),
-                new Fruit("Apple", 20, 10, 5, 25, 800),
-                new Spice("Salt", 20, 10, 5, 25, true, false)
+                new Vegetable("Помидор", 20, 10, 5, 50, 800),
+                new Meat("Куриная грудка", 20, 10, 5, 100, Animals.Chicken),
+                new Vegetable("Огурец", 20, 10, 5, 80, 800),
+                new Vegetable("Перец болгарский", 20, 10, 5, 50, 800),
+                new Fruit("Авокадо", 20, 10, 5, 25, 800),
+                new Spice("Соль", 0, 0, 0, 0, true, false),
+                new Spice("Перец молотый", 0.5, 0.2, 0, 0.3, false, true)
             };
 
             var dish = cook.CookDish("Салат с куриной грудкой", products);
 
             cook.DecorateDish();
 
-            Console.WriteLine(dish.Energy);
+            Waiter waiter = new Waiter("Павел");
+
+            var sortedProducts = waiter.GetProductsFromDishSortedByCarbohydrates(dish);
+
+            foreach (var product in sortedProducts)
+            {
+                Console.WriteLine($"{product.Name} {product.CarbohydratesCount}");
+            }
         }
     }
 }
