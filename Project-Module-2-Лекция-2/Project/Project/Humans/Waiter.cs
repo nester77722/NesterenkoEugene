@@ -45,5 +45,10 @@ namespace Project.Humans
 
             return sortedProducts;
         }
+
+        public void ServeDish(Dish dish)
+        {
+            System.Console.WriteLine($"Официант {Name} подал блюдо {dish.Name}");
+        }
     }
 }

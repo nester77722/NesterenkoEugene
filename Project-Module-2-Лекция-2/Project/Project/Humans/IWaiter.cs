@@ -8,5 +8,7 @@ namespace Project.Humans
         public Product[] GetProductsFromDishSortedByCarbohydrates(Dish dish);
         public Product[] GetProductsFromDishSortedByProteins(Dish dish);
         public Product[] GetProductsFromDishSortedByFats(Dish dish);
+
+        public void ServeDish(Dish dish);
     }
 }
