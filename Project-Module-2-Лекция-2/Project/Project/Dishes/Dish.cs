@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Project.Dish
+﻿namespace Project.Dishes
 {
     public class Dish
     {
@@ -32,6 +26,11 @@ namespace Project.Dish
 
                 return count;
             }
+        }
+
+        public Product[] GetProducts()
+        {
+            return _products;
         }
     }
 }
