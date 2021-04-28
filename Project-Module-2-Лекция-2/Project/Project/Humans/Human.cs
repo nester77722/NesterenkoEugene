@@ -1,6 +1,6 @@
 ﻿namespace Project.Humans
 {
-    public class Human
+    public abstract class Human
     {
         public Human(string name)
         {
