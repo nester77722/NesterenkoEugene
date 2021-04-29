@@ -10,38 +10,44 @@ namespace Project.Humans
         {
         }
 
-        public Product[] GetProductsFromDishSortedByCarbohydrates(Dish dish)
+        public Product[] GetSortedProductsFromDish(Dish dish, SortingType sortingType)
         {
             var products = dish.GetProducts();
 
-            Product[] sortedProducts = products.OrderBy(o => o.CarbohydratesCount).ToArray();
+            Product[] sortedProducts;
 
-            return sortedProducts;
-        }
+            switch (sortingType)
+            {
+                case SortingType.ByEnergy:
+                    {
+                        sortedProducts = products.OrderBy(product => product.Energy).ToArray();
+                        break;
+                    }
 
-        public Product[] GetProductsFromDishSortedByEnergy(Dish dish)
-        {
-            var products = dish.GetProducts();
+                case SortingType.ByCarbonhydrates:
+                    {
+                        sortedProducts = products.OrderBy(product => product.CarbohydratesCount).ToArray();
+                        break;
+                    }
 
-            Product[] sortedProducts = products.OrderBy(o => o.Energy).ToArray();
+                case SortingType.ByProteins:
+                    {
+                        sortedProducts = products.OrderBy(product => product.ProteinsCount).ToArray();
+                        break;
+                    }
 
-            return sortedProducts;
-        }
+                case SortingType.ByFats:
+                    {
+                        sortedProducts = products.OrderBy(product => product.FatsCount).ToArray();
+                        break;
+                    }
 
-        public Product[] GetProductsFromDishSortedByFats(Dish dish)
-        {
-            var products = dish.GetProducts();
-
-            Product[] sortedProducts = products.OrderBy(o => o.FatsCount).ToArray();
-
-            return sortedProducts;
-        }
-
-        public Product[] GetProductsFromDishSortedByProteins(Dish dish)
-        {
-            var products = dish.GetProducts();
-
-            Product[] sortedProducts = products.OrderBy(o => o.ProteinsCount).ToArray();
+                default:
+                    {
+                        sortedProducts = products;
+                        break;
+                    }
+            }
 
             return sortedProducts;
         }
