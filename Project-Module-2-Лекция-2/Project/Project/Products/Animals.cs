@@ -1,6 +1,6 @@
 ﻿namespace Project
 {
-    public enum Animals
+    public enum AnimalsType
     {
         Cow,
         Chicken,
