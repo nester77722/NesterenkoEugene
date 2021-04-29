@@ -22,7 +22,7 @@ namespace Project
 
             var dish = cook.CookDish("Салат с куриной грудкой", products);
 
-            cook.DecorateDish();
+            cook.DecorateDish(dish);
 
             Waiter waiter = new Waiter("Павел");
 
