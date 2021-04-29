@@ -6,6 +6,6 @@ namespace Project.Humans
     {
         public Dish CookDish(string name, Product[] products);
 
-        public void DecorateDish();
+        public void DecorateDish(Dish dish);
     }
 }

@@ -15,9 +15,9 @@ namespace Project.Humans
             return new Dish(name, products);
         }
 
-        public void DecorateDish()
+        public void DecorateDish(Dish dish)
         {
-            Console.WriteLine($"Повар {Name} украсил блюдо.");
+            Console.WriteLine($"Повар {Name} украсил блюдо {dish.Name}.");
         }
     }
 }
