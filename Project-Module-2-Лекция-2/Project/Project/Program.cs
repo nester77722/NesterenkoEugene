@@ -12,7 +12,7 @@ namespace Project
             Product[] products =
             {
                 new Vegetable("Помидор", 20, 10, 5, 50, 800),
-                new Meat("Куриная грудка", 20, 10, 5, 100, Animals.Chicken),
+                new Meat("Куриная грудка", 20, 10, 5, 100, AnimalsType.Chicken),
                 new Vegetable("Огурец", 20, 10, 5, 80, 800),
                 new Vegetable("Перец болгарский", 20, 10, 5, 50, 800),
                 new Fruit("Авокадо", 20, 10, 5, 120, 800),
@@ -28,7 +28,7 @@ namespace Project
 
             waiter.ServeDish(dish);
 
-            var sortedProducts = waiter.GetProductsFromDishSortedByCarbohydrates(dish);
+            var sortedProducts = waiter.GetSortedProductsFromDish(dish, SortingType.ByCarbonhydrates);
 
             Console.WriteLine("\nПродукты отсортированные по количеству углеводов:\n");
 

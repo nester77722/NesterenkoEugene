@@ -2,20 +2,20 @@
 {
     public class Meat : Product
     {
-        public Meat(string name, double energy, double proteinsCount, double fatsCount, double carbohydratesCount, Animals animals)
+        public Meat(string name, double energy, double proteinsCount, double fatsCount, double carbohydratesCount, AnimalsType animalsType)
             : base(name, energy, proteinsCount, fatsCount, carbohydratesCount, false)
         {
-            Animals = animals;
+            AnimalsType = animalsType;
         }
 
-        public Meat(string name, double energy, double proteinsCount, double fatsCount, double carbohydratesCount, bool isFrozen, Animals animals)
-            : this(name, energy, proteinsCount, fatsCount, carbohydratesCount, animals)
+        public Meat(string name, double energy, double proteinsCount, double fatsCount, double carbohydratesCount, bool isFrozen, AnimalsType animalsType)
+            : this(name, energy, proteinsCount, fatsCount, carbohydratesCount, animalsType)
         {
             IsFrozen = isFrozen;
         }
 
         public bool IsFrozen { get; set; }
 
-        public Animals Animals { get; private set; }
+        public AnimalsType AnimalsType { get; private set; }
     }
 }
