@@ -197,6 +197,24 @@ namespace MyCollections
             return isSuccesfull;
         }
 
+        public object[] ToArray()
+        {
+            object[] array = new object[Count];
+
+            MyLinkedListNode node = _head;
+
+            int i = 0;
+
+            while (node != null)
+            {
+                array[i] = node.Value;
+                i++;
+                node = node.Next;
+            }
+
+            return array;
+        }
+
         private void RemoveNode(MyLinkedListNode node)
         {
             MyLinkedListNode previous = null;
