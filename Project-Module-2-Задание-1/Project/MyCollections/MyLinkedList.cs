@@ -39,5 +39,19 @@ namespace MyCollections
 
             Count++;
         }
+        public void Clear()
+        {
+            MyLinkedListNode head = _head;
+
+            while (head != null)
+            {
+                MyLinkedListNode node2 = head;
+                head = head.Next;
+                node2.Invalidate();
+            }
+
+            _head = null;
+            Count = 0;
+        }
     }
 }
