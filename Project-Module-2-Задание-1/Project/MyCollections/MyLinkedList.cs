@@ -39,6 +39,10 @@ namespace MyCollections
                 {
                     AddLast(value);
                 }
+                else if (index == 0)
+                {
+                    AddFirst(value);
+                }
                 else
                 {
                     MyLinkedList newList = CloneList();
