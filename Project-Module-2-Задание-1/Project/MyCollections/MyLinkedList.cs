@@ -53,5 +53,24 @@ namespace MyCollections
             _head = null;
             Count = 0;
         }
+        public MyLinkedList CloneList()
+        {
+            MyLinkedList newList = new MyLinkedList();
+
+            if (_head == null)
+            {
+                return newList;
+            }
+
+            MyLinkedListNode head = _head;
+
+            while (head != null)
+            {
+                newList.AddLast(head.Value);
+                head = head.Next;
+            }
+
+            return newList;
+        }
     }
 }
