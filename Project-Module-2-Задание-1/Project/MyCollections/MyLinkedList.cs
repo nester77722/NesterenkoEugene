@@ -8,6 +8,60 @@ namespace MyCollections
         private MyLinkedListNode _tail;
 
         public int Count { get; private set; }
+
+        public object this[int index]
+        {
+            get
+            {
+                if (index >= Count)
+                {
+                    return null;
+                }
+
+                MyLinkedListNode head = _head;
+
+                for (int i = 0; i < index; i++)
+                {
+                    head = head.Next;
+                }
+
+                return head.Value;
+            }
+
+            set
+            {
+                if (index > Count || index < 0)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+
+                if (index == Count)
+                {
+                    AddLast(value);
+                }
+                else
+                {
+                    MyLinkedList newList = CloneList();
+                    Clear();
+
+                    MyLinkedListNode head = newList._head;
+                    int i = 0;
+
+                    while (head != null)
+                    {
+                        if (i == index)
+                        {
+                            AddLast(value);
+                        }
+
+                        AddLast(head.Value);
+                        head = head.Next;
+                        i++;
+                    }
+                }
+            }
+        }
+
         public void AddFirst(object value)
         {
             MyLinkedListNode node = new MyLinkedListNode(value);
@@ -39,6 +93,7 @@ namespace MyCollections
 
             Count++;
         }
+
         public void Clear()
         {
             MyLinkedListNode head = _head;
@@ -53,6 +108,7 @@ namespace MyCollections
             _head = null;
             Count = 0;
         }
+
         public MyLinkedList CloneList()
         {
             MyLinkedList newList = new MyLinkedList();
