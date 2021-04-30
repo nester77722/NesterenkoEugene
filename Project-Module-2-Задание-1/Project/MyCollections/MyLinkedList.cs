@@ -128,5 +128,109 @@ namespace MyCollections
 
             return newList;
         }
+
+        public int IndexOf(object value)
+        {
+            MyLinkedListNode current = _head;
+            int i = 0;
+
+            while (current != null)
+            {
+                if (current.Value.Equals(value))
+                {
+                    return i;
+                }
+
+                current = current.Next;
+                i++;
+            }
+
+            return -1;
+        }
+
+        public bool Remove(object value)
+        {
+            MyLinkedListNode node = _head;
+
+            while (node != null)
+            {
+                if (node.Value.Equals(value))
+                {
+                    RemoveNode(node);
+                    return true;
+                }
+
+                node = node.Next;
+            }
+
+            return false;
+        }
+
+        public bool RemoveByIndex(int index)
+        {
+            if (index >= Count || index < 0)
+            {
+                return false;
+            }
+
+            MyLinkedListNode node = _head;
+
+            for (int i = 0; i < index; i++)
+            {
+                node = node.Next;
+            }
+
+            RemoveNode(node);
+
+            return true;
+        }
+
+        public bool RemoveEveryEqual(object item)
+        {
+            bool isSuccesfull = false;
+
+            while (Remove(item))
+            {
+                isSuccesfull = true;
+            }
+
+            return isSuccesfull;
+        }
+
+        private void RemoveNode(MyLinkedListNode node)
+        {
+            MyLinkedListNode previous = null;
+            MyLinkedListNode current = _head;
+
+            while (current != null)
+            {
+                if (current.Equals(node))
+                {
+                    if (previous != null)
+                    {
+                        previous.Next = current.Next;
+
+                        if (current.Next == null)
+                        {
+                            _tail = previous;
+                        }
+                    }
+                    else
+                    {
+                        _head = _head.Next;
+
+                        if (_head == null)
+                        {
+                            _tail = null;
+                        }
+                    }
+
+                    Count--;
+                }
+
+                previous = current;
+                current = current.Next;
+            }
+        }
     }
 }
