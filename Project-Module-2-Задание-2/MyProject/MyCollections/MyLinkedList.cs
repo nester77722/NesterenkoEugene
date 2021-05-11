@@ -4,12 +4,12 @@ namespace MyCollections
 {
     public class MyLinkedList : IMyLinkedList
     {
-        private MyLinkedListNode _head;
-        private MyLinkedListNode _tail;
+        internal MyLinkedListNode _head;
+        internal MyLinkedListNode _tail;
 
-        public int Count { get; private set; }
+        public int Count { get; protected set; }
 
-        public object this[int index]
+        public virtual object this[int index]
         {
             get
             {
@@ -66,7 +66,7 @@ namespace MyCollections
             }
         }
 
-        public void AddFirst(object value)
+        public virtual void AddFirst(object value)
         {
             MyLinkedListNode node = new MyLinkedListNode(value);
             node.Next = _head;
@@ -80,7 +80,7 @@ namespace MyCollections
             Count++;
         }
 
-        public void AddLast(object value)
+        public virtual void AddLast(object value)
         {
             MyLinkedListNode node = new MyLinkedListNode(value);
 

@@ -2,6 +2,10 @@
 {
     internal class MyLinkedListNode
     {
+        internal MyLinkedListNode()
+        {
+        }
+
         internal MyLinkedListNode(object value)
         {
             Value = value;
@@ -11,7 +15,7 @@
 
         internal object Value { get; set; }
 
-        internal void Invalidate()
+        internal virtual void Invalidate()
         {
             Next = null;
             Value = null;
