@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyCollections
 {
-    public class MyDoublyLinkedList : MyLinkedList
+    public class MyDoublyLinkedList : MyLinkedList, IMyLinkedList
     {
         public override object this[int index]
         {
