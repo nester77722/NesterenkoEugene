@@ -23,6 +23,7 @@ namespace MyCollections
         internal override void Invalidate()
         {
             base.Invalidate();
+            Previous = null;
         }
     }
 }
