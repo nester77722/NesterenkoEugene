@@ -98,7 +98,7 @@ namespace MyCollections
             Count++;
         }
 
-        public void Clear()
+        public virtual void Clear()
         {
             MyLinkedListNode head = _head;
 
@@ -170,7 +170,7 @@ namespace MyCollections
             return false;
         }
 
-        public bool RemoveByIndex(int index)
+        public virtual bool RemoveByIndex(int index)
         {
             if (index >= Count || index < 0)
             {
@@ -219,7 +219,7 @@ namespace MyCollections
             return array;
         }
 
-        private void RemoveNode(MyLinkedListNode node)
+        private protected virtual void RemoveNode(MyLinkedListNode node)
         {
             MyLinkedListNode previous = null;
             MyLinkedListNode current = _head;
