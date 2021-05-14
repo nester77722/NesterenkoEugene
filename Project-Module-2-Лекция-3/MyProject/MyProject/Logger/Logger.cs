@@ -18,8 +18,6 @@ namespace MyProject
         {
             ReadConfig();
             _fileService = new FileService(_loggerConfig.DirectoryPath);
-
-            _dateTime = DateTime.Now;
         }
 
         public static Logger Instance
