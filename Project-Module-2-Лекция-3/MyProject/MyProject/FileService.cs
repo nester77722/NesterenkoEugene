@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MyProject
 {
@@ -20,6 +17,7 @@ namespace MyProject
 
             CreateDirectory();
             DirePath = @"D:\LogProgram\Logs\";
+            DeleteOldFiles();
 
             FilePath = $"{DirePath}{_dateTime.Hour}.{_dateTime.Minute}.{_dateTime.Second}.{_dateTime.ToShortDateString()}.txt";
 
@@ -32,7 +30,7 @@ namespace MyProject
             }
             catch (Exception ex)
             {
-                throw new Exception("Неверный путь файла!", ex);
+                throw new Exception("Не удалось создать файл!", ex);
             }
         }
 
@@ -73,6 +71,27 @@ namespace MyProject
 
         private void DeleteOldFiles()
         {
+            string[] files = Directory.GetFiles(DirePath);
+
+            var filesCount = files.Length;
+
+            while (filesCount > 2)
+            {
+                FileInfo oldestFile = new FileInfo(files[0]);
+
+                foreach (var file in files)
+                {
+                    var temp = new FileInfo(file);
+
+                    if (temp.CreationTime < oldestFile.CreationTime)
+                    {
+                        oldestFile = temp;
+                    }
+                }
+
+                oldestFile.Delete();
+                filesCount--;
+            }
         }
     }
 }
