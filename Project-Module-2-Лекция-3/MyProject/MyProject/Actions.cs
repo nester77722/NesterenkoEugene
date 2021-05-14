@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static System.Reflection.MethodBase;
 
 namespace MyProject
 {
@@ -12,7 +9,7 @@ namespace MyProject
 
         public static void StartMethod()
         {
-            _logger.AddLog(LogTypes.Info, "Message frome StartMethod.");
+            _logger.AddLog(LogTypes.Info, $"Message from {GetCurrentMethod().Name}");
         }
 
         public static void Business()
