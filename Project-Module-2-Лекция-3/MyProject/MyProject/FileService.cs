@@ -10,13 +10,13 @@ namespace MyProject
         private StringBuilder _buffer;
         private DateTime _dateTime;
 
-        public FileService()
+        public FileService(string path = @"D:\LogProgram\")
         {
             _buffer = new StringBuilder();
             _dateTime = DateTime.Now;
 
+            DirePath = path;
             CreateDirectory();
-            DirePath = @"D:\LogProgram\Logs\";
             DeleteOldFiles();
 
             FilePath = $"{DirePath}{_dateTime.Hour}.{_dateTime.Minute}.{_dateTime.Second}.{_dateTime.ToShortDateString()}.txt";
@@ -55,18 +55,12 @@ namespace MyProject
 
         private void CreateDirectory()
         {
-            string path = @"D:\LogProgram\";
-
-            string subPath = @"Logs";
-
-            DirectoryInfo dirInfo = new DirectoryInfo(path);
+            DirectoryInfo dirInfo = new DirectoryInfo(DirePath);
 
             if (!dirInfo.Exists)
             {
                 dirInfo.Create();
             }
-
-            dirInfo.CreateSubdirectory(subPath);
         }
 
         private void DeleteOldFiles()
