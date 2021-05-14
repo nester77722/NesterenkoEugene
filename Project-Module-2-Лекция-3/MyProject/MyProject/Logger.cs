@@ -15,7 +15,6 @@ namespace MyProject
             _fileService = new FileService();
 
             _dateTime = DateTime.Now;
-            Console.WriteLine(_dateTime.ToLongTimeString());
         }
 
         public static Logger Instance
@@ -29,6 +28,19 @@ namespace MyProject
 
                 return _uniqueInstance;
             }
+        }
+
+        public void AddLog(LogTypes logType, string message)
+        {
+            _dateTime = DateTime.Now;
+
+            string logMessage = $"{_dateTime.ToShortDateString()} {_dateTime.ToLongTimeString()} ---> {message}";
+            _fileService.Write(logMessage);
+        }
+
+        public string GetLogs()
+        {
+            return _fileService.GetBuffer();
         }
     }
 }
