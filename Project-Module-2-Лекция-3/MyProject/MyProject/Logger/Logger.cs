@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace MyProject
 {
@@ -10,9 +12,12 @@ namespace MyProject
 
         private FileService _fileService;
 
+        private LoggerConfig _loggerConfig;
+
         private Logger()
         {
-            _fileService = new FileService();
+            ReadConfig();
+            _fileService = new FileService(_loggerConfig.DirectoryPath);
 
             _dateTime = DateTime.Now;
         }
@@ -41,6 +46,14 @@ namespace MyProject
         public string GetLogs()
         {
             return _fileService.GetBuffer();
+        }
+
+        private void ReadConfig()
+        {
+            string path = @"D:\LogProgram\Configs\LoggerConfig.json";
+
+            var configPath = File.ReadAllText(path);
+            _loggerConfig = JsonConvert.DeserializeObject<LoggerConfig>(configPath);
         }
     }
 }
