@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading;
-
-namespace MyProject
+﻿namespace MyProject
 {
     public class Program
     {
