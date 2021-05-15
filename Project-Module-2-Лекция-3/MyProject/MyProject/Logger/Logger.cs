@@ -10,14 +10,14 @@ namespace MyProject
 
         private DateTime _dateTime;
 
-        private FileService _fileService;
+        private IWriter _writer;
 
         private LoggerConfig _loggerConfig;
 
         private Logger()
         {
             ReadConfig();
-            _fileService = new FileService(_loggerConfig.DirectoryPath);
+            _writer = new FileService(_loggerConfig.DirectoryPath);
         }
 
         public static Logger Instance
@@ -38,12 +38,12 @@ namespace MyProject
             _dateTime = DateTime.Now;
 
             string logMessage = $"{_dateTime.ToShortDateString()} {_dateTime.ToLongTimeString()} ---> {message}";
-            _fileService.Write(logMessage);
+            _writer.Write(logMessage);
         }
 
         public string GetLogs()
         {
-            return _fileService.GetBuffer();
+            return _writer.GetBuffer();
         }
 
         private void ReadConfig()

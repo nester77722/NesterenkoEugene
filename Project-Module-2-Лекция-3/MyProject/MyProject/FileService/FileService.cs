@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MyProject
 {
-    public class FileService
+    public class FileService : IWriter
     {
         private StreamWriter _streamWriter;
         private StringBuilder _buffer;
