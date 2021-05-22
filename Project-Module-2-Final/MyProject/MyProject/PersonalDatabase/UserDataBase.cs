@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using MyProject.Attributes;
 using MyProject.Exceptions;
+using MyProject.Registrator;
 using MyProject.Users;
 using Newtonsoft.Json;
 
@@ -13,20 +10,20 @@ namespace MyProject.PersonalDatabase
     public class UserDataBase
     {
         private User[] _users;
-        private string _playersPath;
-        private string _adminsPath;
-        public UserDataBase(string path)
+        private string _path;
+        private string[] _userTypes;
+        public UserDataBase(RegistratorConfig config)
         {
             _users = new User[0];
-            _playersPath = path + "PlayersDataBase.json";
-            _adminsPath = path + "AdminsDataBase.json";
+            _path = config.DataBasePath + "UsersDataBase.json";
+            _userTypes = config.UserTypes;
             ReadBase();
         }
 
+        public User[] Users => _users;
+
         public void AddUser(User newUser)
         {
-            ReadBase();
-
             var temp = _users;
 
             _users = new User[temp.Length + 1];
@@ -38,84 +35,37 @@ namespace MyProject.PersonalDatabase
             SaveBase();
         }
 
-        public User[] GetUsers()
-        {
-            return _users;
-        }
-
-        public Player[] GetPlayers()
-        {
-            Player[] players = new Player[_users.Length];
-            int i = 0;
-
-            foreach (var user in _users)
-            {
-                Player temp = user as Player;
-                if (temp != null)
-                {
-                    players[i] = temp;
-                    i++;
-                }
-            }
-
-            Array.Resize(ref players, i);
-
-            return players;
-        }
-
-        public Admin[] GetAdmins()
-        {
-            Admin[] admins = new Admin[_users.Length];
-            int i = 0;
-
-            foreach (var user in _users)
-            {
-                Admin temp = user as Admin;
-                if (temp != null)
-                {
-                    admins[i] = temp;
-                    i++;
-                }
-            }
-
-            Array.Resize(ref admins, i);
-
-            return admins;
-        }
-
         private void ReadBase()
         {
-            var players = ReadFile<Player>(_playersPath);
-            var admins = ReadFile<Admin>(_adminsPath);
-
-            _users = new User[players.Length + admins.Length];
-            int i = 0;
-
-            foreach (var player in players)
-            {
-                _users[i] = player;
-                i++;
-            }
-
-            foreach (var admin in admins)
-            {
-                _users[i] = admin;
-                i++;
-            }
-        }
-
-        private T[] ReadFile<T>(string path)
-        {
-            T[] users = new T[0];
             try
             {
-                using (StreamReader streamReader = new StreamReader(path))
+                foreach (string userType in _userTypes)
                 {
-                    string json = streamReader.ReadToEnd();
+                    var type = Type.GetType(typeof(User).Namespace + "." + userType).MakeArrayType();
 
-                    if (!string.IsNullOrEmpty(json))
+                    using (StreamReader streamReader = new StreamReader(_path))
                     {
-                        users = JsonConvert.DeserializeObject<List<T>>(json).ToArray();
+                        while (!streamReader.EndOfStream)
+                        {
+                            string line = streamReader.ReadLine();
+
+                            if (line == userType)
+                            {
+                                string nextLine = streamReader.ReadLine();
+
+                                if (!string.IsNullOrEmpty(nextLine))
+                                {
+                                    User[] users = JsonConvert.DeserializeObject(nextLine, type) as User[];
+
+                                    var temp = _users;
+                                    Array.Resize(ref _users, _users.Length + users.Length);
+                                    temp.CopyTo(_users, 0);
+                                    users.CopyTo(_users, temp.Length);
+                                }
+
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -123,22 +73,33 @@ namespace MyProject.PersonalDatabase
             {
                 throw new UserDataBaseException("Не удалось прочитать базу данных.", ex);
             }
-
-            return users;
         }
 
         private void SaveBase()
         {
-            using (StreamWriter streamWriter = new StreamWriter(_playersPath))
-            {
-                string json = JsonConvert.SerializeObject(GetPlayers());
-                streamWriter.Write(json);
-            }
+            File.WriteAllText(_path, string.Empty);
 
-            using (StreamWriter streamWriter = new StreamWriter(_adminsPath))
+            foreach (string userType in _userTypes)
             {
-                string json = JsonConvert.SerializeObject(GetAdmins());
-                streamWriter.Write(json);
+                User[] users = new User[_users.Length];
+                int currentLength = 0;
+
+                foreach (var user in _users)
+                {
+                    if (user.GetType().Name == userType.ToString())
+                    {
+                        users[currentLength] = user;
+                        currentLength++;
+                    }
+                }
+
+                Array.Resize(ref users, currentLength);
+
+                using (StreamWriter streamWriter = new StreamWriter(_path, true))
+                {
+                    string json = $"{userType.ToString()}\n{JsonConvert.SerializeObject(users)}";
+                    streamWriter.WriteLine(json);
+                }
             }
         }
     }

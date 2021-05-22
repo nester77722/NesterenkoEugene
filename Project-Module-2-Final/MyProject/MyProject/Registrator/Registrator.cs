@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using MyProject.Attributes;
 using MyProject.Exceptions;
 using MyProject.PersonalDatabase;
@@ -20,8 +16,10 @@ namespace MyProject.Registrator
         public Registrator(RegistratorConfig config)
         {
             _registratorConfig = config;
-            _userDataBase = new UserDataBase(_registratorConfig.DataBasePath);
+            _userDataBase = new UserDataBase(_registratorConfig);
         }
+
+        public User[] Users => _userDataBase.Users;
 
         public void AddUser(User user)
         {
@@ -44,7 +42,7 @@ namespace MyProject.Registrator
 
         public bool LoginUser(User user)
         {
-            var users = _userDataBase.GetUsers();
+            var users = _userDataBase.Users;
 
             foreach (var user1 in users)
             {
@@ -60,21 +58,6 @@ namespace MyProject.Registrator
             return false;
         }
 
-        public Admin[] GetAdmins()
-        {
-            return _userDataBase.GetAdmins();
-        }
-
-        public Player[] GetPlayers()
-        {
-            return _userDataBase.GetPlayers();
-        }
-
-        public User[] GetUsers()
-        {
-            return _userDataBase.GetUsers();
-        }
-
         private void CheckRequired(User user)
         {
             var props = user.GetType().GetProperties();
@@ -83,9 +66,28 @@ namespace MyProject.Registrator
             {
                 if (prop.GetCustomAttribute<RequiredField>() != null)
                 {
-                    if (string.IsNullOrEmpty((string)prop.GetValue(user)))
+                    if (prop.GetValue(user).GetType() == typeof(string))
                     {
-                        throw new FieldRequiredException($"Field {prop.Name} is empty!");
+                        if (string.IsNullOrEmpty(prop.GetValue(user) as string))
+                        {
+                            throw new FieldRequiredException($"Field {prop.Name} is empty!");
+                        }
+                    }
+
+                    if (prop.GetValue(user).GetType() == typeof(int))
+                    {
+                        if ((int)prop.GetValue(user) == default(int))
+                        {
+                            throw new FieldRequiredException($"Field {prop.Name} is empty!");
+                        }
+                    }
+
+                    if (prop.GetValue(user).GetType() == typeof(double))
+                    {
+                        if ((double)prop.GetValue(user) == default(double))
+                        {
+                            throw new FieldRequiredException($"Field {prop.Name} is empty!");
+                        }
                     }
                 }
             }
@@ -93,7 +95,7 @@ namespace MyProject.Registrator
 
         private bool IsExist(User user)
         {
-            var users = _userDataBase.GetUsers();
+            var users = _userDataBase.Users;
             foreach (var user1 in users)
             {
                 if (user1.Login == user.Login)
