@@ -2,8 +2,8 @@
 using System.IO;
 using MyProject.Exceptions;
 using MyProject.Registrator;
-using Newtonsoft.Json;
 using MyProject.Users;
+using Newtonsoft.Json;
 
 namespace MyProject
 {
@@ -15,7 +15,7 @@ namespace MyProject
         {
             try
             {
-                string path = @"D:\/RegistratorProgram\Config\RegistratorConfig.json";
+                string path = @"D:\RegistratorProgram\Config\RegistratorConfig.json";
 
                 var configJson = File.ReadAllText(path);
                 var config = JsonConvert.DeserializeObject<RegistratorConfig>(configJson);
