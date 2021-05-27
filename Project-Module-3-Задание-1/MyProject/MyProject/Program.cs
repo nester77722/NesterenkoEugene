@@ -17,6 +17,9 @@ namespace MyProject
             queue.Enqueue(false);
             queue.Enqueue(false);
 
+            // true
+            // false
+            // false
             foreach (var item in queue)
             {
                 Console.WriteLine(item);
@@ -28,12 +31,21 @@ namespace MyProject
             stack.Push(false);
             stack.Push(false);
 
+            // false
+            // false
+            // true
             foreach (var item in stack)
             {
                 Console.WriteLine(item);
                 dataStore.Add(item);
             }
 
+            // true
+            // false
+            // false
+            // false
+            // false
+            // true
             foreach (var item in dataStore)
             {
                 Console.WriteLine(item);
@@ -41,9 +53,13 @@ namespace MyProject
 
             Week week = new Week();
 
-            foreach (var day in week)
+            // Выводится дважды, Reset() работает
+            for (int i = 0; i < 2; i++)
             {
-                Console.WriteLine(day);
+                foreach (var day in week)
+                {
+                    Console.WriteLine(day);
+                }
             }
         }
     }
