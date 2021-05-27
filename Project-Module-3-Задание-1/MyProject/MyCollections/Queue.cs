@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyCollections
 {
-    public class Queue<T>
+    public class Queue<T> : IEnumerable<T>
     {
         private Node<T> _head;
         private Node<T> _tail;
@@ -14,7 +15,6 @@ namespace MyCollections
         public Queue()
         {
             _head = _tail = null;
-            Count = 0;
         }
 
         public int Count { get; private set; }
@@ -56,6 +56,22 @@ namespace MyCollections
             }
 
             return _head.Value;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            var current = _head;
+
+            while (current != null)
+            {
+                yield return current.Value;
+                current = current.Next;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         private bool IsEmpty()

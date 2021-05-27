@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyCollections
 {
-    public class Stack<T>
+    public class Stack<T> : IEnumerable<T>
     {
         private Node<T> _head;
 
@@ -48,6 +49,22 @@ namespace MyCollections
             }
 
             return _head.Value;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            var current = _head;
+
+            while (current != null)
+            {
+                yield return current.Value;
+                current = current.Next;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         private bool IsEmpty()
