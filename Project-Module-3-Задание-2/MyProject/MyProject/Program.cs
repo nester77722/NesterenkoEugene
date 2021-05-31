@@ -8,14 +8,36 @@ namespace MyProject
     {
         public static void Main(string[] args)
         {
-            int[] array = { 1, 4, 5, 23, 42, 12, 3 };
+            int[] array = { 5, 2, 8 };
 
-            MyLinkedList<int> list = new MyLinkedList<int>(array);
-            IReadOnlyCollection<int> readOnly = list;
+            MyLinkedList<int> intList = new MyLinkedList<int>(array);
 
-            foreach (var item in readOnly)
+            // intList[2]++;
+            // Error CS0200  Property or indexer 'MyLinkedList<int>.this[int]' cannot be assigned to --it is read only
+
+            // intList[0] = 4;
+            // Error CS0200  Property or indexer 'MyLinkedList<int>.this[int]' cannot be assigned to --it is read only
+            List<int>[] arrayList = new List<int>[1];
+
+            arrayList[0] = new List<int>();
+            arrayList[0].Add(15);
+            arrayList[0].Add(10);
+
+            MyLinkedList<List<int>> list = new MyLinkedList<List<int>>(arrayList);
+
+            list[0].Add(35);
+
+            foreach (var item in list)
             {
-                Console.WriteLine(item);
+                item.Add(100);
+            }
+
+            foreach (var item in list)
+            {
+                foreach (var item2 in item)
+                {
+                    Console.WriteLine(item2);
+                }
             }
 
             MyHashTable<int, string> hashTable = new MyHashTable<int, string>();
