@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace MyCollections
 {
@@ -21,11 +23,11 @@ namespace MyCollections
 
         public T this[int index]
         {
-            get
+             get
             {
                 if (index >= Count)
                 {
-                    return default(T);
+                    throw new IndexOutOfRangeException();
                 }
 
                 Node<T> head = _head;
@@ -35,7 +37,8 @@ namespace MyCollections
                     head = head.Next;
                 }
 
-                return head.Value;
+                Node<T> result = head.Clone();
+                return result.Value;
             }
         }
 
@@ -89,7 +92,8 @@ namespace MyCollections
 
             while (current != null)
             {
-                yield return current.Value;
+                var copy = current.Clone();
+                yield return copy.Value;
                 current = current.Next;
             }
         }
