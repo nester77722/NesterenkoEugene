@@ -61,6 +61,17 @@ namespace MyProject
                     Console.WriteLine(day);
                 }
             }
+
+            DataStore<int> data = new DataStore<int>();
+            data.Add(0);
+            data.Add(2);
+            data.Insert(10, 2);
+            data.RemoveAt(1);
+
+            foreach (var item in data)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }
