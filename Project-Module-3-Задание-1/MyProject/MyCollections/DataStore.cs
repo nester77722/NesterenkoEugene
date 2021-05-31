@@ -128,7 +128,10 @@ namespace MyCollections
 
             if (start < Count)
             {
-                Array.Copy(_data, start, _data, index, Count - start);
+                for (int i = index; i < Count - 1; i++)
+                {
+                    _data[i] = _data[i + 1];
+                }
             }
 
             Count--;
