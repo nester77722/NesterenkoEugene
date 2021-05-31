@@ -25,10 +25,12 @@ namespace MyProject
 
             MyLinkedList<List<int>> list = new MyLinkedList<List<int>>(arrayList);
 
+            // Изменения не сохраняются
             list[0].Add(35);
 
             foreach (var item in list)
             {
+                // Изменения не сохраняются
                 item.Add(100);
             }
 
@@ -36,6 +38,8 @@ namespace MyProject
             {
                 foreach (var item2 in item)
                 {
+                    // 15
+                    // 10
                     Console.WriteLine(item2);
                 }
             }
