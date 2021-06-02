@@ -2,9 +2,9 @@
 
 namespace PublisherSubscriberProject
 {
-    class Program
+    public class Program
     {
-        static void Main()
+        public static void Main()
         {
             var pub = new Publisher();
             var sub1 = new ConsoleSubscriber(pub);

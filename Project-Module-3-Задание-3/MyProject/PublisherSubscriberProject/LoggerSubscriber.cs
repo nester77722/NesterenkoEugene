@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Logger;
-using System.Threading.Tasks;
-
-namespace PublisherSubscriberProject
+﻿namespace PublisherSubscriberProject
 {
     public class LoggerSubscriber : ISubscriber
     {
-        Logger.Logger _logger = Logger.Logger.Instance;
+        private Logger.Logger _logger = Logger.Logger.Instance;
 
         public LoggerSubscriber(Publisher pub)
         {
