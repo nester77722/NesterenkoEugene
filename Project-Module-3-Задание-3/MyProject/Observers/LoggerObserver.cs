@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Observers
 {
-    public class BusinessClassObserver : IObserver
+    public class LoggerObserver
     {
         private Logger.Logger _logger = Logger.Logger.Instance;
 
-        public void Update(string message)
+        public void LogNotyfies(string message)
         {
             _logger.AddLog(message);
         }
