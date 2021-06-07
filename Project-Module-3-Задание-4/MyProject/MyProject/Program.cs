@@ -34,15 +34,14 @@ namespace MyProject
                              Email = p.Email,
                              Name = p.FirstName + " " + p.LastName,
                              Age = p.Age,
-                             Address = from ad in addresses
-                                       from adId in p.AddressList
-                                       where ad.Id == adId
+                             Address = from adId in p.AddressList
+                                       join address in addresses on adId equals address.Id
                                        select new
                                        {
-                                           City = ad.City,
-                                           Country = ad.Country,
-                                           State = ad.State,
-                                           AddressLine = ad.AddressLine
+                                           City = address.City,
+                                           Country = address.Country,
+                                           State = address.State,
+                                           AddressLine = address.AddressLine
                                        }
                          };
 
@@ -74,22 +73,24 @@ namespace MyProject
             var countries = (from address in addresses
                              select address.Country).Distinct();
 
-            var countryGroups = from country in countries
-                                select new
-                                {
-                                    Country = country,
-                                    People = (from p in result
-                                              from address in p.Address
-                                              where address.Country == country
-                                              select p).Distinct()
-                                };
+            var countryGroups = from person in result
+                                from address in person.Address
+                                group person by address.Country;
+
+            countryGroups.Distinct();
+
+            foreach (var g in countryGroups)
+            {
+                g.Distinct();
+            }
 
             Console.WriteLine();
 
             foreach (var g in countryGroups)
             {
-                Console.WriteLine($"People who lived in {g.Country}:");
-                foreach (var t in g.People)
+                Console.WriteLine($"People who lived in {g.Key}:");
+                g.Distinct();
+                foreach (var t in g)
                 {
                     Console.WriteLine(t.Name);
                 }
