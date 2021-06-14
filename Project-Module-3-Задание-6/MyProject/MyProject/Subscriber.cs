@@ -10,9 +10,10 @@ namespace MyProject
 {
     public class Subscriber
     {
-        private Queue<int> _values = new Queue<int>();
+        private ConcurrentQueue<int> _values = new ConcurrentQueue<int>();
         private object _syncRoot = new object();
 
+        private bool _isEmpty = true;
         public Subscriber()
         {
         }
@@ -24,11 +25,18 @@ namespace MyProject
 
         public void DequeueValues()
         {
-            lock (_syncRoot)
+            while (true)
             {
-                for (int i = 0; i < _values.Count; i++)
+                if (_isEmpty)
                 {
-                    Console.WriteLine(_values.Dequeue());
+                    continue;
+                }
+
+                int value;
+
+                if (_values.TryDequeue(out value))
+                {
+                    Console.WriteLine(value);
                 }
             }
         }
@@ -48,6 +56,7 @@ namespace MyProject
             lock (_syncRoot)
             {
                 _values.Enqueue(e.Value);
+                _isEmpty = false;
             }
         }
     }

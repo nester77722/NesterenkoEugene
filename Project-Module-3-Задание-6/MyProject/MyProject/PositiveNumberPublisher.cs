@@ -26,7 +26,7 @@ namespace MyProject
             }
         }
 
-        public async void GenerateValeAsync(CancellationToken token)
+        public async void GenerateValueAsync(CancellationToken token)
         {
             if (token.IsCancellationRequested)
             {
