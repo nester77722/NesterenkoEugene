@@ -10,53 +10,24 @@ namespace MyProject
 {
     public class Subscriber
     {
-        private ConcurrentQueue<int> _values = new ConcurrentQueue<int>();
-        private object _syncRoot = new object();
+        private Queue<int> _values;
 
-        private bool _isEmpty = true;
-        public Subscriber()
+        public Subscriber(Queue<int> values)
         {
+            _values = values;
         }
 
-        public void AddPublisher(IPublisher publisher)
-        {
-            publisher.Handler += Receive;
-        }
-
-        public void DequeueValues()
+        public void Consume()
         {
             while (true)
             {
-                if (_isEmpty)
+                lock (_values)
                 {
-                    continue;
+                    if (_values.Count != 0)
+                    {
+                        Console.WriteLine(_values.Dequeue());
+                    }
                 }
-
-                int value;
-
-                if (_values.TryDequeue(out value))
-                {
-                    Console.WriteLine(value);
-                }
-            }
-        }
-
-        public async void DequeueValuesAsync(CancellationToken token)
-        {
-            if (token.IsCancellationRequested)
-            {
-                return;
-            }
-
-            await Task.Run(() => DequeueValues());
-        }
-
-        private void Receive(object sender, MyEventArgs e)
-        {
-            lock (_syncRoot)
-            {
-                _values.Enqueue(e.Value);
-                _isEmpty = false;
             }
         }
     }

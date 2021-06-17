@@ -9,31 +9,48 @@ namespace MyProject
 {
     public class PositiveNumberPublisher : IPublisher
     {
-        public event EventHandler<MyEventArgs> Handler;
+        private Queue<int> _values;
+        private object _obj = new object();
 
-        public void Publish(MyEventArgs e)
+        public PositiveNumberPublisher(Queue<int> values)
         {
-            Handler?.Invoke(this, e);
+            _values = values;
         }
 
-        public void GenerateValue()
+        public Queue<int> Values
         {
-            for (int i = 0; i < 10; i++)
+            get
             {
-                int value = new Random().Next(1000);
-
-                Publish(new MyEventArgs(value));
+                return _values;
             }
         }
 
-        public async void GenerateValueAsync(CancellationToken token)
+        public void Publish()
         {
-            if (token.IsCancellationRequested)
-            {
-                return;
-            }
+        }
 
-            await Task.Run(() => GenerateValue());
+        public async void PublishAsync()
+        {
+            await Task.Run(
+                () =>
+                {
+                    Random random = new Random();
+                    for (int i = 0; i < 10; i++)
+                    {
+                        lock (_values)
+                        {
+                            _values.Enqueue(random.Next(100));
+                            Thread.Sleep(100);
+                        }
+                    }
+                });
+        }
+
+        private int GenerateValue()
+        {
+            Random random = new Random();
+
+            return random.Next(100);
         }
     }
 }

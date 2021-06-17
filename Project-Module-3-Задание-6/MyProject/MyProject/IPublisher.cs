@@ -8,8 +8,7 @@ namespace MyProject
 {
     public interface IPublisher
     {
-        public event EventHandler<MyEventArgs> Handler;
-
-        public void Publish(MyEventArgs e);
+        public Queue<int> Values { get; }
+        public void Publish();
     }
 }

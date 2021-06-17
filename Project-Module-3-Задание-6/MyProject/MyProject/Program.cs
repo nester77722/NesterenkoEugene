@@ -7,28 +7,28 @@ namespace MyProject
 {
     public class Program
     {
-        private Queue<int> _values = new Queue<int>();
-
-        public static void SaveValueToQueue(object sender, MyEventArgs e)
-        {
-        }
-
         public static void Main(string[] args)
         {
-            PositiveNumberPublisher publisher1 = new PositiveNumberPublisher();
-            NegativeNumberPublisher publisher2 = new NegativeNumberPublisher();
+            Queue<int> values = new Queue<int>();
 
-            Subscriber subscriber = new Subscriber();
-            subscriber.AddPublisher(publisher1);
-            subscriber.AddPublisher(publisher2);
+            PositiveNumberPublisher publisher1 = new PositiveNumberPublisher(values);
+            NegativeNumberPublisher publisher2 = new NegativeNumberPublisher(values);
+            PositiveNumberPublisher publisher3 = new PositiveNumberPublisher(values);
+            NegativeNumberPublisher publisher4 = new NegativeNumberPublisher(values);
+            PositiveNumberPublisher publisher5 = new PositiveNumberPublisher(values);
+            NegativeNumberPublisher publisher6 = new NegativeNumberPublisher(values);
+            PositiveNumberPublisher publisher7 = new PositiveNumberPublisher(values);
 
-            Thread thread1 = new Thread(publisher1.GenerateValue);
-            Thread thread2 = new Thread(publisher2.GenerateValue);
-            Thread thread3 = new Thread(subscriber.DequeueValues);
+            Subscriber subscriber = new Subscriber(values);
+            publisher1.PublishAsync();
+            publisher2.PublishAsync();
+            publisher3.PublishAsync();
+            publisher4.PublishAsync();
+            publisher5.PublishAsync();
+            publisher6.PublishAsync();
+            publisher7.PublishAsync();
 
-            thread1.Start();
-            thread2.Start();
-            thread3.Start();
+            subscriber.Consume();
         }
     }
 }
