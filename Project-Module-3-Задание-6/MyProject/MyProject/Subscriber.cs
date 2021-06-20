@@ -23,10 +23,7 @@ namespace MyProject
             {
                 if (_values.Count != 0)
                 {
-                    lock (_values)
-                    {
-                        Console.WriteLine(_values.Dequeue());
-                    }
+                    Console.WriteLine(_values.Dequeue());
                 }
             }
         }
