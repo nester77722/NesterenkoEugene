@@ -21,9 +21,9 @@ namespace MyProject
         {
             while (true)
             {
-                lock (_values)
+                if (_values.Count != 0)
                 {
-                    if (_values.Count != 0)
+                    lock (_values)
                     {
                         Console.WriteLine(_values.Dequeue());
                     }
