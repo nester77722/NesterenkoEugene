@@ -38,12 +38,5 @@ namespace MyProject
                     }
                 });
         }
-
-        private int GenerateValue()
-        {
-            Random random = new Random();
-
-            return random.Next(100) * -1;
-        }
     }
 }
