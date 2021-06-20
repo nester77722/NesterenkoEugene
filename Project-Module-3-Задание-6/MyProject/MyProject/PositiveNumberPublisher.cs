@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace MyProject
+{
+    public class PositiveNumberPublisher : IPublisher
+    {
+        private Queue<int> _values;
+        private object _obj = new object();
+
+        public PositiveNumberPublisher(Queue<int> values)
+        {
+            _values = values;
+        }
+
+        public void Publish()
+        {
+        }
+
+        public async void PublishAsync()
+        {
+            await Task.Run(
+                () =>
+                {
+                    Random random = new Random();
+                    for (int i = 0; i < 10; i++)
+                    {
+                        lock (_values)
+                        {
+                            _values.Enqueue(random.Next(100));
+                        }
+
+                        Thread.Sleep(100);
+                    }
+                });
+        }
+    }
+}
