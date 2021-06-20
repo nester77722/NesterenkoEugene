@@ -17,14 +17,6 @@ namespace MyProject
             _values = values;
         }
 
-        public Queue<int> Values
-        {
-            get
-            {
-                return _values;
-            }
-        }
-
         public void Publish()
         {
         }
@@ -40,8 +32,9 @@ namespace MyProject
                         lock (_values)
                         {
                             _values.Enqueue(random.Next(100) * -1);
-                            Thread.Sleep(100);
                         }
+
+                        Thread.Sleep(100);
                     }
                 });
         }

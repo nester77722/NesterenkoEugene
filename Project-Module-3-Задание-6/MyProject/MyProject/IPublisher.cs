@@ -8,7 +8,6 @@ namespace MyProject
 {
     public interface IPublisher
     {
-        public Queue<int> Values { get; }
         public void Publish();
     }
 }
