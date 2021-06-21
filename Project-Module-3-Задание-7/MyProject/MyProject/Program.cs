@@ -19,7 +19,7 @@ namespace MyProject
             while (true)
             {
                 Task<ulong> fibonacciAsync = FibonacciAsync(n, source2.Token);
-                Thread.Sleep(100);
+                Thread.Sleep(10000);
                 if (!fibonacciAsync.IsCompleted)
                 {
                     source2.Cancel();
