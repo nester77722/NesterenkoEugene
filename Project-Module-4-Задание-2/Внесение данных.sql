@@ -1,3 +1,4 @@
+use Task4
 insert into Categories (Name)
 values
 ('Phone'),

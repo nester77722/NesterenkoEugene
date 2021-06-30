@@ -1,3 +1,5 @@
+use Task4
+
 create table Categories
 (
 	Id int primary key IDENTITY,
