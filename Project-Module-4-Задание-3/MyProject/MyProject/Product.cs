@@ -4,9 +4,8 @@ namespace MyProject
 {
     public class Product
     {
-        public Product(int categoryId, string name, decimal price)
+        public Product(string name, decimal price)
         {
-            CategoryId = categoryId;
             Name = name;
             Price = price;
         }

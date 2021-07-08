@@ -4,9 +4,8 @@ namespace MyProject
 {
     public class UserAddress
     {
-        public UserAddress(int userId, string city, string address, string phoneNumber)
+        public UserAddress(string city, string address, string phoneNumber)
         {
-            UserId = userId;
             City = city;
             Address = address;
             PhoneNumber = phoneNumber;
