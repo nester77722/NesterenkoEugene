@@ -6,81 +6,14 @@ namespace MyProject
     {
         public static void Main(string[] args)
         {
-            Config config = new Config();
+            ApplicationContext context = new ApplicationContext();
 
-            ApplicationContext context = new ApplicationContext(config);
+            Order order = new Order() { Discount = context.Discounts.First(), User = context.Users.First() };
 
-            Category category = new Category("Phone");
-            context.AddRange(new Category("Phone"), new Category("Notebook"));
+            context.Add(order);
             context.SaveChanges();
 
-            var categories = context.Categories;
-
-
-            Product product = new Product("iPhone X", 1500)
-            {
-                Category = (from c in context.Categories
-                            where c.Name == "Phone"
-                            select c).First()
-            };
-
-            Product product2 = new Product("Asus rog strix", 3500)
-            {
-                Category = (from c in context.Categories
-                            where c.Name == "Notebook"
-                            select c).First()
-            };
-
-            context.AddRange(product, product2);
-            context.SaveChanges();
-
-
-            Discount discount = new Discount() { Value = 5 };
-            context.Add(discount);
-            context.SaveChanges();
-
-            User user = new User("Bob", "Crosby") { Age = 32 };
-            context.Add(user);
-            context.SaveChanges();
-
-
-            UserAddress userAddress = new UserAddress("Kharkov", "Heroiv Pratsi", "380673564775")
-            {
-                User = (from c in context.Users
-                        where c.FirstName == "Bob" && c.LastName == "Crosby"
-                        select c).First()
-            };
-            context.Add(userAddress);
-            context.SaveChanges();
-
-
-            Cart cart = new Cart()
-            {
-                UserId =
-                (from c in context.Users
-                 where c.FirstName == "Bob" && c.LastName == "Crosby"
-                 select c.Id).First(),
-
-                Discount = (from d in context.Discounts
-                            where d.Value == 5
-                            select d).First()
-            };
-            context.Add(cart);
-            context.SaveChanges();
-
-            CartItem cartItem = new CartItem()
-            {
-                Product = (from p in context.Products
-                           where p.Name == "iPhone X"
-                           select p).First(),
-
-                Cart = (from c in context.Carts
-                        where c.User.FirstName == "Bob" && c.User.LastName == "Crosby"
-                        select c).First(),
-                Count = 1
-            };
-
-            context.Add(cartItem);
+            context.Add(new OrderItem() { Order = order, Product = context.Products.First(), Count = 1 });
             context.SaveChanges();
 
             var userInfo = from u in context.Users
