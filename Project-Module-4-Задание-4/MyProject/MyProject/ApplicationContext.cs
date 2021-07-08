@@ -5,7 +5,7 @@ namespace MyProject
     public class ApplicationContext : DbContext
     {
         private Config _config;
-        private readonly string _defaultConnectionString = @"Data Source = localhost; Initial Catalog = DataBase; Trusted_Connection = True;";
+        private readonly string _defaultConnectionString = @"Data Source = localhost; Initial Catalog = DefalutBase; Trusted_Connection = True;";
 
         public DbSet<User> Users { get; set; }
         public DbSet<UserAddress> Addresses { get; set; }
@@ -14,7 +14,8 @@ namespace MyProject
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Discount> Discounts { get; set; }
         public DbSet<Cart> Carts { get; set; }
-
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
         public ApplicationContext()
             :this(null)
         {
