@@ -4,7 +4,7 @@ namespace MyProject
 {
     public class CartItem
     {
-        [Required]
+        [Required, Key]
         public int CartId { get; set; }
         public Cart Cart { get; set; }
 
