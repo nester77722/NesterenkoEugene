@@ -14,9 +14,18 @@ namespace ModulePL
 
             var student = service.GetById(id);
 
+            StudentViewModel result = new StudentViewModel($"{student.FirstName} {student.LastName}", student.Age);
+
             List<PaymentViewModel> paymentViewModels = new List<PaymentViewModel>();
 
-            throw new NotImplementedException();
+            foreach (var pay in student.Payments)
+            {
+                paymentViewModels.Add(new PaymentViewModel(pay.Date, pay.Value));
+            }
+
+            result.Payments = paymentViewModels;
+
+            return result;
         }
     }
 }
