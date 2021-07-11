@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ModuleDAL\ModuleDal.csproj" />
     <ProjectReference Include="..\ModulePL\ModulePL.csproj" />
   </ItemGroup>
 
