@@ -24,8 +24,10 @@ namespace ModuleDal
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //modelBuilder.Entity<Student>()
+            //            .HasMany(s => s.Payments)
+            //            .WithOne();
             base.OnModelCreating(modelBuilder);
-
         }
     }
 }

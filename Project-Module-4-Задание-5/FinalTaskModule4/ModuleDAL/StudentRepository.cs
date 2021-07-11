@@ -26,6 +26,12 @@ namespace ModuleDal
             var result = (from s in _context.Students
                           where s.Id == id
                           select s).FirstOrDefault();
+
+            var payments = (from p in _context.Payments
+                           where p.StudentId == result.Id
+                           select p).ToList();
+
+            result.Payments = payments;
             return result;
         }
     }
