@@ -8,19 +8,21 @@ namespace MyProject
         {
             ApplicationContext context = new ApplicationContext();
 
-            Order order = new Order() { Discount = context.Discounts.First(), User = context.Users.First() };
+            //Order order = new Order() { Discount = context.Discounts.First(), User = context.Users.First() };
 
-            context.Add(order);
-            context.SaveChanges();
+            //context.Add(order);
+            //context.SaveChanges();
 
-            context.Add(new OrderItem() { Order = order, Product = context.Products.First(), Count = 1 });
-            context.SaveChanges();
+            //context.Add(new OrderItem() { Order = order, Product = context.Products.First(), Count = 1 });
+            //context.SaveChanges();
 
             var userInfo = from u in context.Users
                            from add in context.Addresses
-                           from item in context.CartItems
+                           from order in context.Orders
+                           from item in context.OrderItems
                            where u.Id == add.UserId
-                           where u.Id == item.Cart.UserId
+                           where u.Id == order.UserId
+                           where item.OrderId == order.Id
                            select new
                            {
                                FirstName = u.FirstName,
