@@ -10,7 +10,7 @@ namespace ModuleDal
 
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Student> Students { get; set; }
-        public ModuleContext(string connectionString = @"Server=.; DataBase=Module;Initial Catalog=Task;Trusted_Connection=True;")
+        public ModuleContext(string connectionString = @"Data Source = localhost; Initial Catalog = Module;Trusted_Connection=True;")
         {
             _connectionString = connectionString;
             Database.EnsureCreated();
