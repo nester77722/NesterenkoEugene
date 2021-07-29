@@ -17,5 +17,6 @@ namespace MyProject
         public string LastName { get; set; }
         public string Avatar { get; set; }
         public string Job { get; set; }
+        public string Password { get; init; }
     }
 }

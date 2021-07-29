@@ -8,47 +8,22 @@ namespace MyProject
         {
             var client = new ReqresClient();
 
-            var pagedUsers = client.GetAllUsersAsync(2).GetAwaiter().GetResult();
-            var users = pagedUsers.Data;
+            var users = client.GetAllUsersAsync().GetAwaiter().GetResult();
 
-            foreach(var u in users)
-            {
-                Console.WriteLine(u.FirstName);
-                Console.WriteLine(u.LastName);
-                Console.WriteLine(u.Id);
-                Console.WriteLine();
-            }
+            var user = client.GetUserByIdAsync(5).GetAwaiter().GetResult();
 
-            var user = client.GetUserByIdAsync(2).GetAwaiter().GetResult();
-            Console.WriteLine(user.Id);
-            Console.WriteLine(user.FirstName);
-            Console.WriteLine(user.LastName);
+            var resources = client.GetAllResourcesAsync().GetAwaiter().GetResult();
 
-            Console.WriteLine(client.DeleteUserByIdAsync(2).GetAwaiter().GetResult());
-            Console.WriteLine(client.CreateUserAsync(new User { FirstName = "Nick", Job = "Avenger" }).GetAwaiter().GetResult());
+            var resource = client.GetResourceByIdAsync(5).GetAwaiter().GetResult();
 
-            var pagedResources = client.GetAllResourcesAsync(2).GetAwaiter().GetResult();
-            var resources = pagedResources.Data;
+            var employee = client.PostEmployeeAsync(new { Name = "morpheus", Job = "leader" }).GetAwaiter().GetResult();
 
-            foreach (var r in resources)
-            {
-                Console.WriteLine(r.Name);
-                Console.WriteLine(r.PantoneValue);
-                Console.WriteLine(r.Year);
-                Console.WriteLine();
-            }
+            var updatedEmployee = client.PutEmployeeAsync(new { Name = "morpheus", Job = "zion resident" }, 2).GetAwaiter().GetResult();
+            var pathedEmployee = client.PatchEmployeeAsync(new Employee { Name = "morpheus", Job = "zion resident" }, 2).GetAwaiter().GetResult();
 
-            var resource = client.GetResourceByIdAsync(2).GetAwaiter().GetResult();
-            Console.WriteLine(resource.Id);
-            Console.WriteLine(resource.Name);
-            Console.WriteLine(resource.Year);
+            client.DeleteUserAsync(2).GetAwaiter().GetResult();
 
-            var newUser = new User() { Id = 2, LastName = "Ivanov", FirstName = "Ivan", Job = "Helper" };
-            var updateResult = client.UpdateUser(newUser).GetAwaiter().GetResult();
-            Console.WriteLine(updateResult.Job);
-
-            client.RegisterAsync("eve.holt@reqres.in", "pistol").GetAwaiter().GetResult();
-            client.LoginAsync("eve.holt@reqres.in", "cityslicka").GetAwaiter().GetResult();
+            var getAllUsersDelayed = client.GetAllUsersDelayedAsync(3).GetAwaiter().GetResult();
         }
     }
 }

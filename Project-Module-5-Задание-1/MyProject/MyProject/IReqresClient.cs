@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace MyProject
 {
     public interface IReqresClient
     {
-        Task<ReqresPagedResult<User>> GetAllUsersAsync(int? page = null);
-        Task<User> GetUserByIdAsync(int id);
-        Task<Resource> GetResourceByIdAsync(int id);
-        Task<User> UpdateUser(User user);
-        Task<bool> DeleteUserByIdAsync(int id);
-        Task<bool> CreateUserAsync(User user);
-        Task<ReqresPagedResult<Resource>> GetAllResourcesAsync(int? page = null);
-        Task RegisterAsync(string email, string password);
-        Task LoginAsync(string email, string password);
+        public Task DeleteUserAsync(int id);
+        public Task<ReqresPagedResult<User>> GetAllUsersAsync(int? page);
+        public Task<ReqresPagedResult<User>> GetAllUsersDelayedAsync(int delay);
+        public Task<ReqresPagedResult<Resource>> GetAllResourcesAsync();
+        public Task<User> GetUserByIdAsync(int id);
+        public Task<Resource> GetResourceByIdAsync(int id);
+        public Task<RegisterResponse> LoginUserAsync(User user);
+        public Task<Employee> PostEmployeeAsync(object employee);
+        public Task<Employee> PutEmployeeAsync(object employee, int id);
+        public Task<Employee> PatchEmployeeAsync(Employee employee, int id);
+        public Task<RegisterResponse> RegisterUserAsync(User user);
+        public Task<T> MakeRequestAsync<T>(string url, HttpMethod httpMethod, object body);
     }
 }

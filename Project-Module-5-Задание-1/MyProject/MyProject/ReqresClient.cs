@@ -1,227 +1,119 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Net;
 using System.Net.Http;
-using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace MyProject
 {
     public class ReqresClient : IReqresClient
     {
-        private const string _baseUrl = "https://reqres.in/api/";
-        public async Task<bool> CreateUserAsync(User user)
+        private readonly string _baseUrl = @"https://reqres.in/api/";
+
+        public async Task<Employee> PutEmployeeAsync(object employee, int id)
         {
-            try
-            {
-                using var httpClient = new HttpClient();
+            var url = $"{_baseUrl}users/{id}";
 
-                var url = $"{_baseUrl}users";
-
-                var response = await httpClient.PostAsJsonAsync(url, user);
-
-                response.EnsureSuccessStatusCode();
-
-                return (int)response.StatusCode == 201;
-            }
-            catch (Exception ex)
-            {
-                throw new Exceptions.ReqresClientException(ex, "Ошибка при попытке создать пользователя!");
-            }
+            return await MakeRequestAsync<Employee>(url, HttpMethod.Put, employee);
         }
 
-        public async Task<bool> DeleteUserByIdAsync(int id)
+        public async Task<Employee> PostEmployeeAsync(object employee)
         {
-            try
-            {
-                using var httpClient = new HttpClient();
+            var url = $"{_baseUrl}users";
 
-                var url = $"{_baseUrl}users/{id}";
-
-                var response = await httpClient.DeleteAsync(url);
-
-                response.EnsureSuccessStatusCode();
-
-                return (int)response.StatusCode == 204;
-            }
-            catch (Exception ex)
-            {
-                throw new Exceptions.ReqresClientException(ex, "Ошибка при попытке удалить пользователя!");
-            }
+            return await MakeRequestAsync<Employee>(url, HttpMethod.Post, employee);
         }
 
-        public async Task<ReqresPagedResult<Resource>> GetAllResourcesAsync(int? page = null)
+        public async Task<ReqresPagedResult<Resource>> GetAllResourcesAsync()
         {
-            try
-            {
-                using var httpClient = new HttpClient();
+            var url = $"{_baseUrl}unknown";
 
-                var url = page.HasValue ? $"{_baseUrl}unknown?page={page}" : $"{_baseUrl}unknown";
-
-                var response = await httpClient.GetAsync(url);
-
-                response.EnsureSuccessStatusCode();
-
-                var payload = await response.Content.ReadAsStringAsync();
-
-                return JsonConvert.DeserializeObject<ReqresPagedResult<Resource>>(payload);
-            }
-            catch (Exception ex)
-            {
-                throw new Exceptions.ReqresClientException(ex, "Ошибка в получении данных о пользователях!");
-            }
+            return await MakeRequestAsync<ReqresPagedResult<Resource>>(url, HttpMethod.Get);
         }
 
         public async Task<ReqresPagedResult<User>> GetAllUsersAsync(int? page = null)
         {
-            try
-            {
-                using var httpClient = new HttpClient();
+            var url = page.HasValue ? $"{_baseUrl}users?page={page}" : $"{_baseUrl}users";
 
-                var url = page.HasValue ? $"{_baseUrl}users?page={page}" : $"{_baseUrl}users";
-
-                var response = await httpClient.GetAsync(url);
-
-                response.EnsureSuccessStatusCode();
-
-                var payload = await response.Content.ReadAsStringAsync();
-
-                return JsonConvert.DeserializeObject<ReqresPagedResult<User>>(payload);
-            }
-            catch(Exception ex)
-            {
-                throw new Exceptions.ReqresClientException(ex, "Ошибка в получении данных о пользователях!");
-            }
+            return await MakeRequestAsync<ReqresPagedResult<User>>(url, HttpMethod.Get);
         }
 
         public async Task<Resource> GetResourceByIdAsync(int id)
         {
-            try
-            {
-                using var httpClient = new HttpClient();
+            var url = $"{_baseUrl}unknown/{id}";
 
-                var url = $"{_baseUrl}unknown/{id}";
-
-                var response = await httpClient.GetAsync(url);
-
-                response.EnsureSuccessStatusCode();
-
-                var payload = await response.Content.ReadAsStringAsync();
-
-                var result = JsonConvert.DeserializeObject<ReqresSingleResult<Resource>>(payload);
-
-                return result.Data;
-            }
-            catch (Exception ex)
-            {
-                throw new Exceptions.ReqresClientException(ex, "Ошибка получения данных о пользователе!");
-            }
+            return await MakeRequestAsync<Resource>(url, HttpMethod.Get);
         }
 
         public async Task<User> GetUserByIdAsync(int id)
         {
-            try
-            {
-                using var httpClient = new HttpClient();
+            var url = $"{_baseUrl}users/{id}";
 
-                var url = $"{_baseUrl}users/{id}";
+            var dataResponse = await MakeRequestAsync<ReqresSingleResult<User>>(url, HttpMethod.Get);
 
-                var response = await httpClient.GetAsync(url);
-
-                response.EnsureSuccessStatusCode();
-
-                var payload = await response.Content.ReadAsStringAsync();
-
-                var result = JsonConvert.DeserializeObject<ReqresSingleResult<User>>(payload);
-
-                return result.Data;
-            }
-            catch (Exception ex)
-            {
-                throw new Exceptions.ReqresClientException(ex, "Ошибка получения данных о пользователе!");
-            }
+            return dataResponse.Data;
         }
 
-        public async Task LoginAsync(string email, string password)
+        public async Task<T> MakeRequestAsync<T>(string url, HttpMethod httpMethod, object? body = null)
         {
-            try
+            using (var httpClient = new HttpClient())
             {
-                using var httpClient = new HttpClient();
-
-                var url = $"{_baseUrl}login";
-
-                var newUser = new
+                var requestMessage = new HttpRequestMessage();
+                requestMessage.RequestUri = new Uri(url);
+                if (body is not null)
                 {
-                    email = email,
-                    password = password
-                };
+                    requestMessage.Content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
+                }
 
-                var httpContent = new StringContent(JsonConvert.SerializeObject(newUser), Encoding.UTF8, "application/json");
+                requestMessage.Method = httpMethod;
 
-                var response = await httpClient.PostAsync(url, httpContent);
+                var result = await httpClient.SendAsync(requestMessage);
 
-                response.EnsureSuccessStatusCode();
-
-                var payload = await response.Content.ReadAsStringAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exceptions.ReqresClientException(ex, "Не удалось войти в аккаунт!");
-            }
-        }
-
-        public async Task RegisterAsync(string email, string password)
-        {
-            try
-            {
-                using var httpClient = new HttpClient();
-
-                var url = $"{_baseUrl}register";
-
-                var newUser = new
+                if (result.IsSuccessStatusCode)
                 {
-                    email = email,
-                    password = password
-                };
-
-                var httpContent = new StringContent(JsonConvert.SerializeObject(newUser), Encoding.UTF8, "application/json");
-
-                var response = await httpClient.PostAsync(url, httpContent);
-
-                response.EnsureSuccessStatusCode();
-
-                var payload = await response.Content.ReadAsStringAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exceptions.ReqresClientException(ex, "Не удалось зарегистрировать пользователя!");
+                    return JsonConvert.DeserializeObject<T>(await result.Content.ReadAsStringAsync());
+                }
+                else
+                {
+                    throw new Exceptions.ReqresClientException(null, $"Content of response: {await result.Content.ReadAsStringAsync()}\nError is {result.StatusCode}\nCode is {(int)result.StatusCode}");
+                }
             }
         }
 
-        public async Task<User> UpdateUser(User user)
+        public async Task<Employee> PatchEmployeeAsync(Employee employee, int id)
         {
-            try
-            {
-                using var client = new HttpClient();
+            var url = $"{_baseUrl}users/{id}";
 
-                var url = $"{_baseUrl}users/{user.Id}";
+            return await MakeRequestAsync<Employee>(url, HttpMethod.Patch, employee);
+        }
 
-                var response = await client.PutAsJsonAsync(url, user);
-                response.EnsureSuccessStatusCode();
+        public async Task DeleteUserAsync(int id)
+        {
+            var url = $"{_baseUrl}users/{id}";
 
-                var payload = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<User>(payload);
+            var response = await MakeRequestAsync<string>(url, HttpMethod.Delete);
+        }
 
-                return result;
-            }
-            catch(Exception ex)
-            {
-                throw new Exceptions.ReqresClientException(ex, "Не удалось обновить данные о пользователе!");
-            }
+        public async Task<RegisterResponse> RegisterUserAsync(User user)
+        {
+            var url = $"{_baseUrl}register";
 
+            return await MakeRequestAsync<RegisterResponse>(url, HttpMethod.Post, user);
+        }
 
+        public async Task<RegisterResponse> LoginUserAsync(User user)
+        {
+            var url = $"{_baseUrl}login";
+
+            return await MakeRequestAsync<RegisterResponse>(url, HttpMethod.Post, user);
+        }
+
+        public async Task<ReqresPagedResult<User>> GetAllUsersDelayedAsync(int delay)
+        {
+            var url = $"{_baseUrl}users?delay={delay}";
+
+            return await MakeRequestAsync<ReqresPagedResult<User>>(url, HttpMethod.Get);
         }
     }
 }
