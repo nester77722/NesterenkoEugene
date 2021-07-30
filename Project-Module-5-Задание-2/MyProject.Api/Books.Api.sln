@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyProject.Api", "MyProject.Api\MyProject.Api.csproj", "{A4DA920C-EA6E-4922-8D13-BD51C4D25584}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Books.Api", "MyProject.Api\Books.Api.csproj", "{A4DA920C-EA6E-4922-8D13-BD51C4D25584}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
