@@ -11,7 +11,7 @@ namespace Books.Api
         {
             BookStores = new List<BookStore>();
             Books = new List<Book>();
-            var random = new Random();
+
             Books.AddRange(new List<Book>
             {
                 new Book { Id = 1, Name = "Harry Potter and the Philosopher's Stone", Author = "J. K. Rowling", PagesAmount = 352, Price = 304},
