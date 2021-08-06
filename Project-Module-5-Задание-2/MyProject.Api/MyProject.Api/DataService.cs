@@ -17,7 +17,7 @@ namespace Books.Api
                 new Book { Id = 1, Name = "Harry Potter and the Philosopher's Stone", Author = "J. K. Rowling", PagesAmount = 352, Price = 304},
                 new Book { Id = 2, Name = "Harry Potter and the Chamber of Secrets", Author = "J. K. Rowling", PagesAmount = 384, Price = 304},
                 new Book { Id = 3, Name = "Harry Potter and the Prisoner of Azkaban", Author = "J. K. Rowling", PagesAmount = 480, Price = 304},
-                new Book { Id = 4, Name = "Potter and the Goblet of Fire", Author = "J. K. Rowling", PagesAmount = 640, Price = 342},
+                new Book { Id = 4, Name = "Harry Potter and the Goblet of Fire", Author = "J. K. Rowling", PagesAmount = 640, Price = 342},
                 new Book { Id = 5, Name = "Harry Potter and the Order of the Phoenix", Author = "J. K. Rowling", PagesAmount = 816, Price = 342},
             });
 
