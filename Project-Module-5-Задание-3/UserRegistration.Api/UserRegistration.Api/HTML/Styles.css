@@ -1,0 +1,30 @@
+﻿body
+{
+    background-color: moccasin;
+    font-family: Garamond;
+    text-align: center;
+}
+
+table
+{
+    width: 300px;
+    border: 1px solid black;
+    margin: auto;
+    border-collapse: collapse;
+}
+
+td, th
+{
+    padding: 5px;
+    border: 2px solid black;
+}
+
+tr:nth-child(3)
+{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+tr:nth-child(even)
+{
+    background-color: rgb(66, 181, 227)
+}
