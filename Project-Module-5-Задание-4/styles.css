@@ -1,0 +1,8 @@
+body{
+    background-color: lightgoldenrodyellow;
+    font-size: 20px;
+}
+
+#deleteEmployeeButton {
+    background-color: red;
+}
