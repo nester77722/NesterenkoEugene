@@ -92,11 +92,11 @@ class Employee extends React.Component
 
     render()
     {
-        let currentEmployees = this.state.person.people?.map(employee => <button onClick={() => this.onSwitchToEmployee(employee)}>{employee.name}</button>)
+        let currentEmployees = this.state.person.people?.map(employee => <button id = "selectEmployeeButton" onClick={() => this.onSwitchToEmployee(employee)}>{employee.name}</button>)
     return <div>
         <>Текущий работник: <strong>{this.state.person.name} </strong><br /> </>
         <>Его начальник: </>
-        <button onClick={() => this.onSwitchToEmployee(this.state.person.boss)}>{(this.state.person.boss == null) ? "У этого работяги нет начальника" : this.state.person.boss.name}</button> <br />
+        <button id = "selectEmployeeButton" onClick={() => this.onSwitchToEmployee(this.state.person.boss)}>{(this.state.person.boss == null) ? "У этого работяги нет начальника" : this.state.person.boss.name}</button> <br />
         <> Подчиненные: <br /> { currentEmployees }</> <br />
         <button id="deleteEmployeeButton" onClick={() => this.onDeleteEmployee(this.state.person)}>Вышвырнуть лентяя!</button>
     </div>
