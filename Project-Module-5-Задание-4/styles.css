@@ -1,0 +1,12 @@
+body{
+    background-color: lightskyblue;
+    font-size: 20px;
+}
+
+#deleteEmployeeButton {
+    background-color: crimson;
+}
+
+#selectEmployeeButton{
+    background-color: palegoldenrod
+}
