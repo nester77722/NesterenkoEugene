@@ -1,34 +1,53 @@
-import React, { Component } from 'react'
-import {connect} from 'react-redux'
-import {getUsers, deleteUser} from '../store/actions/usersActions'
+import React, { Component, useRef } from 'react'
+import { connect } from 'react-redux'
+import { getUsers, deleteUser } from '../store/actions/usersActions'
+import RedactUser from './redactUser'
+import CreateNewUser from './createNewUser'
 
- class users extends Component {
-    componentDidMount(){
+class users extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = { selectedUser: {} };
+        this.userSelected = this.userSelected.bind(this);
+    }
+
+    componentDidMount() {
         this.props.getUsers();
     }
 
-    ondeleteUser(id){
-        debugger;
+    componentDidUpdate(){
+        this.props.getUsers();
+    }
+
+    ondeleteUser(id) {
         this.props.deleteUser(id);
     }
 
+    userSelected(user) {
+        this.setState({ selectedUser: user });
+    }
+
     render() {
-        const {users} = this.props.users
-        console.log(users)
-        
+        const { users } = this.props.users;
+        console.log(users);
+
         return (
-            <div>
-                {users.map(u => 
-                     <React.Fragment key={u.id}>
-                         <h6 >{u.firstName} {u.lastName}</h6> 
-                     <button onClick={()=>this.ondeleteUser(u.id)}>-</button>
-                     </React.Fragment>
+            <div className="allUsers">
+                <RedactUser user={this.state.selectedUser} />
+                <CreateNewUser />
+                <br /><br /><label id="title">Click on name of user to redact</label> <br />
+                {users.map(u =>
+                    <React.Fragment key={u.id}>
+                        <button onClick={() => this.userSelected(u)}>Name: {u.firstName} Last Name: {u.lastName} </button>
+                        <button onClick={() => this.ondeleteUser(u.id)}>-</button> <br />
+                    </React.Fragment>
                 )}
             </div>
         )
     }
 }
 
-const mapStateToProps  = (state) => ({users:state.users});
+const mapStateToProps = (state) => ({ users: state.users });
 
-export default connect(mapStateToProps, {getUsers, deleteUser})(users);
+export default connect(mapStateToProps, { getUsers, deleteUser })(users);

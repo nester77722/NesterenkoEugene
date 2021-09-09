@@ -15,15 +15,15 @@ namespace Customers.Api.Services
             _innerId = 1;
             _data = new List<Customer>()
             {
-                new Customer{Id = _innerId++, FirstName = "Carlos", LastName = "Solis" ,RoleId = 1},
-                new Customer{Id = _innerId++, FirstName = "Ihor", LastName = "Serdiuk" ,RoleId = 2},
-                new Customer{Id = _innerId++, FirstName = "Gennadiy", LastName = "Kernes" ,RoleId = 1},
+                new Customer{Id = _innerId++, FirstName = "Carlos", LastName = "Solis" },
+                new Customer{Id = _innerId++, FirstName = "Ihor", LastName = "Serdiuk" },
+                new Customer{Id = _innerId++, FirstName = "Gennadiy", LastName = "Kernes" },
             };
         }
 
         public void Create(Customer customer)
         {
-            _data.Add(customer);
+            _data.Add(new Customer { Id = _innerId++, FirstName = customer.FirstName, LastName = customer.LastName });
         }
 
         public void Delete(int id)
@@ -47,8 +47,7 @@ namespace Customers.Api.Services
             var customerToUpdate = _data.First(x => x.Id == customer.Id);
 
             customerToUpdate.LastName = customer.LastName;
-            customerToUpdate.FirstName = customer.LastName;
-            customerToUpdate.RoleId = customer.RoleId;
+            customerToUpdate.FirstName = customer.FirstName;
         }
     }
 }

@@ -32,5 +32,17 @@ namespace Customers.Api.Controllers
         {
             _customerService.Delete(id);
         }
+
+        [HttpPost]
+        public void Post(Customer customer)
+        {
+            _customerService.Create(customer);
+        }
+
+        [HttpPatch]
+        public void Patch(Customer customer)
+        {
+            _customerService.Update(customer);
+        }
     }
 }
