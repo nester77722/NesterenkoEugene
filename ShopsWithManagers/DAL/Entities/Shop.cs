@@ -6,9 +6,8 @@ namespace DAL.Entities
     {
         public int Id { get; set; }
         [Required]
-        [StringLength(30, MinimumLength = 3)]
         public string Name { get; set; }
         [Required]
-        public string Adress { get; set; }
+        public string Address { get; set; }
     }
 }

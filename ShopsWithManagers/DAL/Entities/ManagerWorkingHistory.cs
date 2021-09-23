@@ -6,7 +6,7 @@ namespace DAL.Entities
 {
     public class ManagerWorkingHistory
     {
-        [Key]
+        [Required]
         public int Id { get; set; }
         [Required]
         public DateTime StartedWorkingAt { get; set; }

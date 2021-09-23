@@ -6,14 +6,12 @@ namespace DAL.Entities
 {
     public class Manager
     {
-        [Key]
+        [Required]
         public int Id { get; set; }
         [Required]
-        [StringLength(20, MinimumLength = 3)]
         public string Name { get; set; }
         [Required]
         public string Status { get; set; }
-
         public int? CurrentShopId { get; set; }
         [ForeignKey("CurrentShopId")]
         public virtual Shop Shop { get; set; }

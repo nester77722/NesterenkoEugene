@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace DAL.Interfaces
 {
-    public interface IWorkingHistoriesRepository
+    public interface IWorkingHistoryRepository
     {
-        void AddNewWorkingHistoryLogForManager(int managerId, int shopId);
-        void CompleteWorkingHistoryForManager(int managerId);
+        void AddWorkingHistoryLogForManager(int managerId, int shopId);
+        void EndWorkingHistoryForManager(int managerId);
         public IEnumerable<ManagerWorkingHistory> GetManagerWorkingHistory(int managerId);
     }
 }
