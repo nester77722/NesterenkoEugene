@@ -1,0 +1,16 @@
+button{
+    display: inline-block;
+    width: auto;
+    text-align: center;
+}
+
+.buttons button{
+    font-family: Calibri, Cooper, 'Times New Roman', Times, 'Times New Roman', serif;
+    font-size: large;
+    background-color:khaki;
+    border-radius: 10pt;
+}
+
+.buttons button:hover{
+    background-color:khaki;
+}
